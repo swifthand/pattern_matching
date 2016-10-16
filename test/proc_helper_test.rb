@@ -1,5 +1,7 @@
 require 'test_helper'
 
+PatternMatching.default_configuration!
+
 class ProcHelperTest < Minitest::Test
   include PatternMatching
 
@@ -41,5 +43,5 @@ class ProcHelperTest < Minitest::Test
   end
 
 
-
 end
+

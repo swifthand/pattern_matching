@@ -1,5 +1,7 @@
 require 'test_helper'
 
+PatternMatching.default_configuration!
+
 class WildcardTest < Minitest::Test
   include PatternMatching
 

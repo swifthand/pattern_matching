@@ -24,6 +24,74 @@
 # something of the sort, and so the name fits... in a limited way.
 module PatternMatching
 
+
+  def self.included(base)
+    if PatternMatching.config.use_proc_helpers
+      if PatternMatching.default_proc_helpers?
+        base.send(:include, PatternMatching::ProcHelpers)
+      else
+        base.send(:include, PatternMatching.custom_proc_helpers)
+      end
+    end
+  end
+
+
+  Config = Struct.new(
+    :use_proc_helpers,
+    :use_bindings,
+    :send_helper,
+    :call_helper,
+    :binding_helper
+  )
+
+
+  def self.config
+    @config ||= Config.new(true, true, :S, :C, :B)
+  end
+
+
+  def self.default_configuration!
+    @config = Config.new(true, true, :S, :C, :B)
+  end
+
+
+  def self.configure(&block)
+    block.call(config)
+    build_custom_proc_helpers   unless default_proc_helpers?
+    # build_custom_binding_helper unless default_binding_helper?
+  end
+
+
+  def self.build_custom_proc_helpers
+    current_config = self.config
+    proc_helpers = ->() {
+      define_method(current_config.send_helper) do |symbol|
+        symbol.to_proc
+      end
+
+      define_method(current_config.call_helper) do |symbol|
+        Proc.new { |obj| self.send(symbol, obj) }
+      end
+    }
+
+    @custom_proc_helpers = Module.new
+    @custom_proc_helpers.class_exec(&proc_helpers)
+  end
+
+
+  def self.custom_proc_helpers
+    @custom_proc_helpers
+  end
+
+
+  def self.default_proc_helpers?
+    :S == config.send_helper && :C == config.call_helper
+  end
+
+
+################################################################################
+
+
   Undefined = Object.new
   Any       = Object.new
   def Undefined.inspect ; "<Undefined>" ; end
@@ -39,20 +107,6 @@ module PatternMatching
   # TODO: More robust implementation that recruses into data structures and the like.
   def Pattern(*pattern)
     ::PatternMatching::PatternMatch.new(*pattern)
-  end
-
-  ##
-  # S for 'send', as in "send message to object".
-  # Allows for prettier Proc pattern-matches than simply :sym.to_proc everywhere
-  def S(symbol)
-    symbol.to_proc
-  end
-
-  ##
-  # C for 'call', as in "call method in current context".
-  # Allows for prettier Method pattern-matches than method(:sym)
-  def C(symbol)
-    Proc.new { |obj| self.send(symbol, obj)  }
   end
 
 
