@@ -1,0 +1,33 @@
+PATH
+  remote: .
+  specs:
+    pattern_matching (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    ansi (1.5.0)
+    builder (3.2.2)
+    minitest (5.9.1)
+    minitest-reporters (1.1.11)
+      ansi
+      builder
+      minitest (>= 5.0)
+      ruby-progressbar
+    rake (10.5.0)
+    ruby-progressbar (1.8.1)
+    turn-again-reporter (1.1.0)
+      minitest-reporters (~> 1.0, >= 1.0.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.7)
+  minitest-reporters (~> 1.1)
+  pattern_matching!
+  rake (~> 10.0)
+  turn-again-reporter (~> 1.1, >= 1.1.0)
+
+BUNDLED WITH
+   1.13.5
