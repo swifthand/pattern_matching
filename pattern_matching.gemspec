@@ -8,10 +8,10 @@ Gem::Specification.new do |spec|
   spec.version       = PatternMatching::VERSION
   spec.authors       = ["Paul Kwiatkowski"]
   spec.email         = ["paul@groupraise.com"]
-  spec.summary       = "Allows for crude pattern-matching like behavior. Very crude."
-  spec.description   = "Allows for crude pattern-matching like behavior. Very crude."
-  spec.homepage      = ""
-  spec.license       = "Licensed exclusively to GroupRaise.com, Inc."
+  spec.summary       = "Allows for pattern matching behavior with value bindings and wildcards."
+  spec.description   = "Allows for pattern matching behavior, ala many functional languages, using Ruby's case statements. Additionally, values can be bound at match time. Provides a few helper modules to make this even more terse and feel more flexible."
+  spec.homepage      = "https://github.com/swifthand/pattern_matching"
+  spec.license       = "Revised BSD, see LICENSE.md"
 
   spec.files = Dir['lib/**/*.rb'] + Dir['bin/*']
   spec.files += Dir['[A-Z]*'] + Dir['test/**/*']
