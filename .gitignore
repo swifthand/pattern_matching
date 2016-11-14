@@ -1,0 +1,11 @@
+*.gem
+tmp/**/*
+.DS_Store
+*.swp
+*.tmproj
+tmtags
+.project
+.bundle
+*.sublime-project
+*.sublime-workspace
+.env*
